@@ -21,14 +21,14 @@ public class TaskController {
         System.out.println("La tarea fue agregada existosamente");
     }
 
-    public void removeTask(String id) throws TaskException {
+    public void removeTask(String id) throws TaskException, TaskValidationException {
         if(id==null || id.trim().isEmpty()){
             throw new TaskException("El id es inválido");
         }
             this.taskRepository.removeById(id);
     }
 
-    public void showsTasks() throws TaskException {
+    public void showsTasks() throws TaskException, TaskValidationException {
         List<Task> tasks = this.taskRepository.findAll();
         if(tasks.isEmpty()){
             throw new TaskException("La lista no puede estar vacia");
