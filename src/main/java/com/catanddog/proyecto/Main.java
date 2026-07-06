@@ -11,5 +11,7 @@ public class Main {
         TaskRepository repository = new TaskRepository();
         TaskController controller = new TaskController(repository);
         TaskView view = new TaskView(controller);
+
+        view.showMenu();
     }
 }
