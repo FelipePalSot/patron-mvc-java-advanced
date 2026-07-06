@@ -1,6 +1,6 @@
 package com.catanddog.proyecto.excepciones;
 
-public class TaskException extends RuntimeException {
+public class TaskException extends Exception {
     public TaskException(String message) {
         super(message);
     }

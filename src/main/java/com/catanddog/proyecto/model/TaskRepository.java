@@ -7,7 +7,14 @@ import java.util.*;
 public class TaskRepository {
     List<Task> tasks = new ArrayList<>(); //Es un arraylist que almacena objetos del tipo Task
 
-    public void add(Task task){
+    public void save(Task task) throws TaskException {
+        if(task==null){
+            throw new TaskException("La tarea no puede ser nula");
+        }
+        tasks.add(task);
+    }
+
+    public void add(Task task) throws TaskException {
         if(task==null){
             throw new TaskException("La tarea no puede ser nula");
         }
@@ -23,7 +30,11 @@ public class TaskRepository {
         return null;
     }
 
-    public void remove(String id){
+//    public void remove(String id){
+//        tasks.remove(tasks);
+//    }
+
+    public void removeById(String id) throws TaskException {
         Task task = findById(id);
         if(task==null){
             throw new TaskException("La tarea no puede ser nula");
@@ -31,7 +42,7 @@ public class TaskRepository {
         tasks.remove(task);
     }
 
-    public void remove(String task){
+    public void removeByTask(String task) throws TaskException {
         if(task==null){
             throw new TaskException("La tarea no puede ser nula");
         }
@@ -41,7 +52,7 @@ public class TaskRepository {
         tasks.remove(task);
     }
 
-    public List<Task> findAll(){
+    public List<Task> findAll() throws TaskException {
         if(tasks.isEmpty()){
             throw new TaskException("La lista esta vacia");
         }
@@ -57,7 +68,7 @@ public class TaskRepository {
         return -1;
     }
 
-    public void updateTask(Task updateTask){
+    public void updateTask(Task updateTask) throws TaskException {
         if(updateTask==null){
             throw new TaskException("La tarea no puede ser nula");
         }
