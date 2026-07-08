@@ -33,6 +33,10 @@ public class TaskController {
         if(tasks.isEmpty()){
             throw new TaskException("La lista no puede estar vacia");
         }
+
+        for(Task task:tasks){
+            System.out.println(task);
+        }
     }
 
     public void updateTask(String id, String title, String description, Boolean completed) throws TaskException, TaskValidationException {

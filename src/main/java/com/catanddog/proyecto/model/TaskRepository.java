@@ -1,17 +1,23 @@
 package com.catanddog.proyecto.model;
 
 import com.catanddog.proyecto.excepciones.TaskException;
+import com.catanddog.proyecto.persistence.PersistenceTask;
 
 import java.util.*;
 
 public class TaskRepository {
     List<Task> tasks = new ArrayList<>(); //Es un arraylist que almacena objetos del tipo Task
 
+    public TaskRepository() {
+        tasks = PersistenceTask.loadTasksPersistences();
+    }
+
     public void save(Task task) throws TaskException {
         if(task==null){
             throw new TaskException("La tarea no puede ser nula");
         }
         tasks.add(task);
+        PersistenceTask.saveTasksPersistences(tasks);
     }
 
     public void add(Task task) throws TaskException {
@@ -40,6 +46,7 @@ public class TaskRepository {
             throw new TaskException("La tarea no puede ser nula");
         }
         tasks.remove(task);
+        PersistenceTask.saveTasksPersistences(tasks);
     }
 
     public void removeByTask(String task) throws TaskException {
@@ -50,6 +57,7 @@ public class TaskRepository {
             throw new TaskException("La tarea no puede ser no esta dentro del ArrayList");
         }
         tasks.remove(task);
+        PersistenceTask.saveTasksPersistences(tasks);
     }
 
     public List<Task> findAll() throws TaskException {
@@ -77,5 +85,6 @@ public class TaskRepository {
             throw new TaskException("El indice no es valido");
         }
         tasks.set(index, updateTask);
+        PersistenceTask.saveTasksPersistences(tasks);
     }
 }
