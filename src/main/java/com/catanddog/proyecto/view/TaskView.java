@@ -23,7 +23,10 @@ public class TaskView {
             System.out.println("2. Eliminar");
             System.out.println("3. Actualizar");
             System.out.println("4. Mostrar Tareas");
-            System.out.println("5. Salir");
+            System.out.println("5. Actualizar estado de la tarea");
+            System.out.println("6. Mostrar Tareas completadas");
+            System.out.println("7. Mostrar Tareas pendientes");
+            System.out.println("8. Salir");
             System.out.println("Seleccina una opcion");
 
             String option = scanner.nextLine();
@@ -43,6 +46,15 @@ public class TaskView {
                 case "5":
                     System.out.println("Saliendo del Sistema");
                     break;
+                case "6":
+                    showCompletedTasksView();
+                    break;
+                case "7":
+                    showPendingTasksView();
+                    break;
+                case "8":
+                    System.out.println("Saliendo del sistema");
+                    return;
                 default:
                     System.out.println("Opcion invalida, Intentelo");
             }
@@ -100,6 +112,51 @@ public class TaskView {
         } catch (Exception e){
             System.out.println("Error inesperado");
             e.printStackTrace();
+        }
+    }
+
+    public void updateTaskCompletedView(){
+        try {
+            System.out.println("Ingrese el ID de la Tarea");
+            String id = scanner.nextLine();
+
+            Boolean completed=null;
+            while (completed==null) {
+                System.out.println("¿Está completada? true/false");
+                String input = scanner.nextLine().trim().toLowerCase();
+                if(input.equals("true")){
+                    completed = true;
+                }else if(input.equals("false")){
+                    completed = false;
+                }else{
+                    System.out.println("El valor ingresado no es correcto, ingrese: 'true' o 'false'");
+                }
+            }
+            taskController.updateTaskCompleted(id, completed);
+            System.out.println("Estado de la tarea actualizado correctamente");
+        } catch (TaskValidationException | TaskException e) {
+            System.out.println("Error: " + e.getMessage());
+        } catch (Exception e){
+            System.out.println("Error inesperado, Contacte con el soporte");
+            e.printStackTrace();
+        }
+    }
+
+    public void showCompletedTasksView(){
+        try{
+            System.out.println("Tareas Completadas");
+            taskController.showCompletedTasks();
+        } catch (TaskValidationException | TaskException e) {
+            System.out.println("Error" + e.getMessage());
+        }
+    }
+
+    public void showPendingTasksView(){
+        try{
+            System.out.println("Tareas Pendientes");
+            taskController.showPendingTasks();
+        } catch (TaskValidationException | TaskException e) {
+            System.out.println("Error" + e.getMessage());
         }
     }
 

@@ -39,6 +39,22 @@ public class TaskController {
         }
     }
 
+    public void showCompletedTasks() throws TaskValidationException, TaskException {
+        List<Task> completedTasks = this.taskRepository.findCompletedTasks();
+
+        for(Task task: completedTasks){
+            System.out.println(task);
+        }
+    }
+
+    public void showPendingTasks() throws TaskValidationException, TaskException {
+        List<Task> pendingTasks = this.taskRepository.findPendingTasks();
+
+        for(Task task: pendingTasks){
+            System.out.println(task);
+        }
+    }
+
     public void updateTask(String id, String title, String description, Boolean completed) throws TaskException, TaskValidationException {
         validateTaskData( id,  title,  description,  completed);
         Task updateTask = new Task(id, title, description, completed);
@@ -61,7 +77,21 @@ public class TaskController {
         if(completed==null){
             throw new TaskValidationException("El estado de la tarea es inválido");
         }
+    }
 
+    private void validateTaskData(String id, Boolean completed) throws TaskValidationException {
+        if(id==null || id.trim().isEmpty()){
+            throw new TaskValidationException("El id no puede estar vacío");
+        }
+
+        if(completed==null ){
+            throw new TaskValidationException("El estado no puede nulo");
+        }
+    }
+
+    public void updateTaskCompleted(String id, Boolean completed) throws TaskValidationException, TaskException {
+        validateTaskData(id, completed);
+        this.taskRepository.updateTaskCompleted(id, completed);
     }
 }
 

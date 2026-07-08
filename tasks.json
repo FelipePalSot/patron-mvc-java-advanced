@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "id": "2",
+    "title": "Pasear",
+    "description": "pasear a la mimi",
+    "completed": true
+  },
+  {
+    "id": "1",
+    "title": "Comer",
+    "description": "comer ceviche",
+    "completed": false
+  }
+]

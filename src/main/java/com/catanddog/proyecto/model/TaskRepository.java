@@ -36,9 +36,36 @@ public class TaskRepository {
         return null;
     }
 
-//    public void remove(String id){
-//        tasks.remove(tasks);
-//    }
+    public List<Task> findCompletedTasks() throws TaskException {
+
+        List<Task> completedTasks = new ArrayList<>();
+        for (Task task: tasks){
+            if(task.getCompleted()){
+                completedTasks.add(task);
+            }
+        }
+
+        if(completedTasks.isEmpty()){
+            throw new TaskException("No hay tareas completadas");
+        }
+        return completedTasks;
+    }
+
+    public List<Task> findPendingTasks() throws TaskException {
+
+        List<Task> pendingTasks = new ArrayList<>();
+        for (Task task : tasks) {
+            if (!task.getCompleted()) {
+                pendingTasks.add(task);
+            }
+        }
+
+        if (pendingTasks.isEmpty()) {
+            throw new TaskException("No hay tareas pendientes");
+        }
+        return pendingTasks;
+    }
+
 
     public void removeById(String id) throws TaskException {
         Task task = findById(id);
@@ -85,6 +112,16 @@ public class TaskRepository {
             throw new TaskException("El indice no es valido");
         }
         tasks.set(index, updateTask);
+        PersistenceTask.saveTasksPersistences(tasks);
+    }
+
+    public void updateTaskCompleted(String id, Boolean completed) throws TaskException {
+
+        int index = findIndexById(id);
+        if(index==-1){
+            throw new TaskException("El índice no es válido");
+        }
+        tasks.get(index).setCompleted(completed);
         PersistenceTask.saveTasksPersistences(tasks);
     }
 }
